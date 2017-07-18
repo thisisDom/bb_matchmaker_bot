@@ -24,6 +24,10 @@ gem 'jwt'
 gem 'simple_command'
 # Used to add support for nested hstore in tables
 gem 'nested-hstore'
+# Used to add discordrb libray
+gem 'discordrb'
+# To create and access ENV variables
+gem 'dotenv'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
