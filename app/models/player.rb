@@ -1,5 +1,7 @@
 class Player < ApplicationRecord
-  has_one :queue, { class_name: 'QueuedPlayer' }
+  has_one :queue, { class_name: 'QueuedPlayer' }, dependant: :destroy
+
+  has_many :games_created, { class_name: 'Game', foreign_key: :creator_id }
 
   validates :username, :discord_id, { presence: true,
                                       uniqueness: { case_sensetive: false }
