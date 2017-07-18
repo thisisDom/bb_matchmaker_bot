@@ -1,5 +1,5 @@
 class Player < ApplicationRecord
-  has_one :queued_player
+  has_one :queue, { class_name: 'QueuedPlayer' }
 
   validates :username, :discord_id, { presence: true,
                                       uniqueness: { case_sensetive: false }
