@@ -66,4 +66,23 @@ RSpec.describe Player, type: :model do
       end
     end
   end
+
+  describe 'Associations' do
+    context 'QueuedPlayer' do
+      it 'has one queue' do
+        player = Player.create(username: 'Test', discord_id: 1200, elo: 1000)
+        QueuedPlayer.create(player_id: player.id)
+        expect(player.queue).to be_a(QueuedPlayer)
+      end
+    end
+
+    context 'Games Created' do
+      it 'has many games_created' do
+        player = Player.create(username: 'Test', discord_id: 1200, elo: 1000)
+        game = Game.create(creator_id: player.id, game_map: 'Monuments', game_mode: 'Incursion')
+        expect(player.games_created).to be_all{ be_a(Game) }
+        expect(player.games_created).to include(game)
+      end
+    end
+  end
 end
