@@ -6,5 +6,6 @@ class GamesPlayer < ApplicationRecord
                                                                                                 greater_than_or_equal_to: 0
                                                                                               }
                                                                               }
-  
+  validates :player, uniqueness: { scope: :game }
+
 end
