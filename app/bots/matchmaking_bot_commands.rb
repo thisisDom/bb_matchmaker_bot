@@ -40,8 +40,8 @@ module MatchmakingCommands
 
     teams = Matchmaking.make_game(game, Matchmaking.make_teams(player_pool))
 
-    team_1_channel = event.server.create_channel("#{game.id}-team-1", 2)
-    team_2_channel = event.server.create_channel("#{game.id}-team-2", 2)
+    team_1_channel = event.server.create_channel("game\##{game.id}-team-1", 2)
+    team_2_channel = event.server.create_channel("game\##{game.id}-team-2", 2)
 
     teams[:team_1].each do |games_player|
       event.server.move(event.server.member(games_player.player.discord_id), team_1_channel)
@@ -49,6 +49,26 @@ module MatchmakingCommands
     teams[:team_2].each do |games_player|
       event.server.move(event.server.member(games_player.player.discord_id), team_2_channel)
     end
-  end  
+  end
 
+  command :game_result, { permission_level: 9000 } do |event, game, winning_team|
+    game = Game.find_by(id: game.to_i )
+    return "Game Not Found" unless game
+    return "Game Results Entered" if game.winning_team = 0
+
+    game.update(winning_team: winning_team.to_i)
+
+
+    winning_team_members = GamesPlayer.where(["game_id = ? AND team = ?", game.id, winning_team])
+    losing_team_members = GamesPlayer.where(["game_id = ? AND team != ?", game.id, winning_team])
+
+    Elo.update_elos({ winning_team: winning_team_members, losing_team: losing_team_members })
+
+    lobby = event.server.channels.find { |channel| channel.name.downcase == 'general' }
+
+    team_1_channel = event.server.channels.find { |channel| channel.name.downcase == "game\##{game.id}-team-1" }
+    team_1_channel.users.each { |member| event.server.move(member, lobby) }
+    team_2_channel = event.server.channels.find { |channel| channel.name.downcase == "game\##{game.id}-team-2" }
+    team_2_channel.users.each { |member| event.server.move(member, lobby) }
+  end
 end
