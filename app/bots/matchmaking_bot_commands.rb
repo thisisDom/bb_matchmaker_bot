@@ -1,5 +1,6 @@
 module MatchmakingCommands
   extend Discordrb::Commands::CommandContainer
+
   command :random_teams, { required_permissions: [:administrator] } do |event|
     queue = event.server.channels.find { |channel| channel.name.downcase == 'queue' }
     team_1_channel = event.server.channels.find { |channel| channel.name.downcase == 'team-1' }
@@ -48,7 +49,6 @@ module MatchmakingCommands
     teams[:team_2].each do |games_player|
       event.server.move(event.server.member(games_player.player.discord_id), team_2_channel)
     end
-  end
-
+  end  
 
 end
