@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20170718214529) do
   end
 
   create_table "players", force: :cascade do |t|
-    t.integer "discord_id", null: false
+    t.bigint "discord_id", null: false
     t.string "username", null: false
     t.integer "elo", default: 1200, null: false
     t.datetime "created_at", null: false
