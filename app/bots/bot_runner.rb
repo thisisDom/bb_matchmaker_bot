@@ -10,6 +10,5 @@ bot.set_user_permission(ENV['BOTOWNER'].to_i, 9001)
 puts "This bot's invite URL is #{bot.invite_url}."
 puts 'Click on it to invite it to your server.'
 
-bot.include! MatchmakingEvents
 bot.include! MatchmakingCommands
 bot.run
