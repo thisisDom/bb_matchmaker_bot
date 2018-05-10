@@ -28,6 +28,8 @@ gem 'nested-hstore'
 gem 'discordrb'
 # To create and access ENV variables
 gem 'dotenv'
+# Used for websocket functionality
+gem 'websocket-eventmachine-client'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
