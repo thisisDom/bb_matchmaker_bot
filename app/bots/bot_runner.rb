@@ -1,10 +1,11 @@
 require 'discordrb'
-require 'dotenv/load'
-require_relative 'matchmaking_bot_events'
+require 'dotenv'
 require_relative 'matchmaking_bot_commands'
 
-bot = Discordrb::Commands::CommandBot.new(token: ENV['DISCORDAPI'], client_id: ENV['DISCORDCLIENT'], prefix: '!')
-bot.set_user_permission(ENV['BOTOWNER'].to_i, 9001)
+Dotenv.load('../../.env')
+
+bot = Discordrb::Commands::CommandBot.new(token: ENV['DISCORD_API_KEY'], client_id: ENV['DISCORD_CLIENT_ID'], prefix: '!')
+bot.set_user_permission(ENV['BOTOWNER_ID'].to_i, 9001)
 
 
 puts "This bot's invite URL is #{bot.invite_url}."
